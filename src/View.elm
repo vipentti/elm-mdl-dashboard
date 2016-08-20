@@ -85,11 +85,11 @@ viewHeader model =
     [ Color.background <| Color.color Color.Grey Color.S100
     , Color.text <| Color.color Color.Grey Color.S900
     ]
-    [ Layout.title [] [ text "elm-mdl Dashboard Sample" ]
+    [ Layout.title [] [ text "elm-mdl Dashboard Example" ]
     , Layout.spacer
     , Layout.navigation []
         [ Layout.link
-            [ Layout.href "#" ]
+            [ Layout.href "https://github.com/vipentti/elm-mdl-dashboard" ]
             [ span [] [ text "github" ] ]
         ]
     ]
