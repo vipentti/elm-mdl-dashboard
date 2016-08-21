@@ -1,6 +1,6 @@
 module View exposing (view)
 
-import Html exposing (Html, text, div, span)
+import Html exposing (Html, text, div, span, form)
 import Html.Attributes as Html
 import Html.App as App
 import Model exposing (Model)
@@ -59,6 +59,9 @@ view model =
               , Snackbar.view model.snackbar |> App.map Snackbar
               ]
           }
+
+    , viewSource model
+
     , Html.node "script"
         [ Html.attribute "src" "https://cdn.polyfill.io/v2/polyfill.js?features=Event.focusin" ]
         []
@@ -88,11 +91,27 @@ viewHeader model =
     [ Layout.title [] [ text "elm-mdl Dashboard Example" ]
     , Layout.spacer
     , Layout.navigation []
-        [ Layout.link
-            [ Layout.href "https://github.com/vipentti/elm-mdl-dashboard" ]
-            [ span [] [ text "github" ] ]
-        ]
+        []
     ]
+
+
+viewSource : Model -> Html Msg
+viewSource model =
+    Button.render Mdl [5,6,6,7] model.mdl
+      [ css "position" "fixed"
+      , css "display" "block"
+      , css "right" "0"
+      , css "bottom" "0"
+      , css "margin-right" "40px"
+      , css "margin-bottom" "40px"
+      , css "z-index" "900"
+      , Color.text Color.white
+      , Button.ripple
+      , Button.colored
+      , Button.raised
+      , Button.onClick (ViewSourceClick "https://github.com/vipentti/elm-mdl-dashboard")
+      ]
+      [ text "View Source" ]
 
 
 type alias MenuItem =

@@ -13,3 +13,4 @@ type Msg
   | GotUsers (List User)
   | Toggle (List Int)
   | SelectMail String
+  | ViewSourceClick String

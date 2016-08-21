@@ -8,6 +8,8 @@ import Navigation
 import Route
 import Dict
 
+import Ports
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -47,3 +49,6 @@ update msg model =
               Dict.insert index True model.toggles
       in
         { model | toggles = toggles } ! []
+
+    ViewSourceClick url ->
+      model ! [ Ports.windowOpen url ]
