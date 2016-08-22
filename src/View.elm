@@ -42,40 +42,24 @@ view : Model -> Html Msg
 view model =
   div [] <|
     [ Options.stylesheet styles
-    , Material.Scheme.topWithScheme Color.Cyan Color.LightBlue <|
-        Layout.render Mdl
-          model.mdl
-          [ Layout.fixedHeader
-          , Layout.fixedDrawer
-          , Options.css "display" "flex !important"
-          , Options.css "flex-direction" "row"
-          , Options.css "align-items" "center"
-          ]
-          { header = [ viewHeader model ]
-          , drawer = [ drawerHeader model, viewDrawer model ]
-          , tabs = ( [], [] )
-          , main =
-              [ viewBody model
-              , Snackbar.view model.snackbar |> App.map Snackbar
-              ]
-          }
+    , Layout.render Mdl
+        model.mdl
+        [ Layout.fixedHeader
+        , Layout.fixedDrawer
+        , Options.css "display" "flex !important"
+        , Options.css "flex-direction" "row"
+        , Options.css "align-items" "center"
+        ]
+        { header = [ viewHeader model ]
+        , drawer = [ drawerHeader model, viewDrawer model ]
+        , tabs = ( [], [] )
+        , main =
+            [ viewBody model
+            , Snackbar.view model.snackbar |> App.map Snackbar
+            ]
+        }
 
     , viewSource model
-
-    , Html.node "script"
-        [ Html.attribute "src" "https://cdn.polyfill.io/v2/polyfill.js?features=Event.focusin" ]
-        []
-
-    , Html.node "script"
-        [ Html.attribute "src" "https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.4/dialog-polyfill.min.js" ]
-        []
-
-    , Html.node "link"
-        [ Html.attribute "href" "https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.4/dialog-polyfill.min.css"
-        , Html.attribute "rel" "stylesheet"
-        , Html.attribute "type" "text/css"
-        ]
-        []
 
     , helpDialog model
     ]
