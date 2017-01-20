@@ -1,51 +1,46 @@
 module Route exposing (..)
 
-import String exposing (split)
 import Navigation
+import UrlParser exposing (parsePath, oneOf, map, top, s, (</>), string)
 
 
-type Location
-  = Home
-  | Users
+type Route
+    = Home
+    | Users
 
 
 type alias Model =
-  Maybe Location
+    Maybe Route
 
 
-init : Maybe Location -> Model
+pathParser : UrlParser.Parser (Route -> a) a
+pathParser =
+    oneOf
+        [ map Home top
+        , map Users (s "users")
+        ]
+
+
+init : Maybe Route -> List (Maybe Route)
 init location =
-  location
+    case location of
+        Nothing ->
+            [ Just Home ]
+
+        something ->
+            [ something ]
 
 
-urlFor : Location -> String
+urlFor : Route -> String
 urlFor loc =
-  let
-    url =
-      case loc of
+    case loc of
         Home ->
-          "/"
+            "/"
 
         Users ->
-          "/users"
-  in
-    "#" ++ url
+            "/users"
 
 
-locFor : Navigation.Location -> Maybe Location
+locFor : Navigation.Location -> Maybe Route
 locFor path =
-  let
-    segments =
-      path.hash
-        |> split "/"
-        |> List.filter (\seg -> seg /= "" && seg /= "#")
-  in
-    case segments of
-      [] ->
-        Just Home
-
-      [ "users" ] ->
-        Just Users
-
-      _ ->
-        Nothing
+    parsePath pathParser path
