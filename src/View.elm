@@ -16,6 +16,7 @@ import Route exposing (Route(..))
 import View.Home
 import View.Users
 import Charts
+import Material.Scheme
 
 
 styles : String
@@ -38,28 +39,25 @@ styles =
 
 view : Model -> Html Msg
 view model =
-    div [] <|
-        [ Options.stylesheet styles
-        , Layout.render Mdl
-            model.mdl
-            [ Layout.fixedHeader
-            , Layout.fixedDrawer
-            , Options.css "display" "flex !important"
-            , Options.css "flex-direction" "row"
-            , Options.css "align-items" "center"
-            ]
-            { header = [ viewHeader model ]
-            , drawer = [ drawerHeader model, viewDrawer model ]
-            , tabs = ( [], [] )
-            , main =
-                [ viewBody model
-                , Snackbar.view model.snackbar |> Html.map Snackbar
+    Material.Scheme.top <|
+        Layout.render Mdl
+                model.mdl
+                [ Layout.fixedHeader
+                , Layout.fixedDrawer
+                , Options.css "display" "flex !important"
+                , Options.css "flex-direction" "row"
+                , Options.css "align-items" "center"
                 ]
-            }
-        , viewSource model
-        , helpDialog model
-        ]
-            ++ Charts.createDefinitions
+                { header = [ viewHeader model ]
+                , drawer = [ drawerHeader model, viewDrawer model ]
+                , tabs = ( [], [] )
+                , main =
+                    [ viewBody model
+                    , Snackbar.view model.snackbar |> Html.map Snackbar
+                    , viewSource model
+                    , helpDialog model
+                    ] ++ Charts.createDefinitions
+                }
 
 
 viewHeader : Model -> Html Msg

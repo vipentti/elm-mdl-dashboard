@@ -6,7 +6,7 @@ import Update
 import Model exposing (Model)
 import Msg exposing (Msg(..))
 import Material
-import Subscriptins
+import Subscriptions
 
 
 main : Program Never Model Msg
